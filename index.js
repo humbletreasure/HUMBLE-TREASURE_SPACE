@@ -5,7 +5,7 @@ async function startBot() {
   const { state, saveCreds } = await useMultiFileAuthState('auth_info');
 
   const { version, isLatest } = await fetchLatestBaileysVersion();
-  console.log(`Using WA vversion.join('.'), isLatest:{isLatest}`);
+  console.log(`Using WA v${version.join('.')}, isLatest: ${isLatest}`);
 
   const sock = makeWASocket({
     version,

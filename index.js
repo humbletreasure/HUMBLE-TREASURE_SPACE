@@ -1,5 +1,6 @@
 const { default: makeWASocket, useMultiFileAuthState, fetchLatestBaileysVersion, DisconnectReason, delay } = require("@whiskeysockets/baileys");
 const P = require('pino');
+const qrcode = require('qrcode-terminal');
 
 async function startBot() {
   const { state, saveCreds } = await useMultiFileAuthState('auth_info');
@@ -19,7 +20,9 @@ async function startBot() {
     const { connection, lastDisconnect, qr } = update;
     
     if(qr) {
-      console.log('QR Code:', qr);
+      console.log('\n=== SCAN THIS QR CODE WITH WHATSAPP ===');
+      qrcode.generate(qr, { small: true });
+      console.log('========================================\n');
     }
     
     if(connection === 'close') {

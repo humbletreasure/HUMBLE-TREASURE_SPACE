@@ -9,7 +9,6 @@ async function startBot() {
 
   const sock = makeWASocket({
     version,
-    printQRInTerminal: true,
     auth: state,
     logger: P({ level: 'silent' }),
   });
@@ -17,7 +16,12 @@ async function startBot() {
   sock.ev.on('creds.update', saveCreds);
 
   sock.ev.on('connection.update', (update) => {
-    const { connection, lastDisconnect } = update;
+    const { connection, lastDisconnect, qr } = update;
+    
+    if(qr) {
+      console.log('QR Code:', qr);
+    }
+    
     if(connection === 'close') {
       if(lastDisconnect.error?.output?.statusCode !== DisconnectReason.loggedOut) {
         startBot();
